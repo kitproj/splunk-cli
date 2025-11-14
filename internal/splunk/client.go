@@ -10,23 +10,31 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	splunklib "github.com/kuba--/splunk"
 )
 
-// Client represents a Splunk API client
+// Client wraps the kuba--/splunk client and extends it with additional functionality
 type Client struct {
-	BaseURL    string
-	HTTPClient *http.Client
-	Token      string
+	*splunklib.Client
+	baseURL    string
+	token      string
+	httpClient *http.Client
 }
 
-// NewClient creates a new Splunk API client
+// NewClient creates a new Splunk API client using the popular github.com/kuba--/splunk library
 func NewClient(host, token string) *Client {
+	baseURL := fmt.Sprintf("https://%s:8089", host)
+	// Create the underlying splunk client with empty credentials since we'll use token auth
+	splunkClient := splunklib.NewClient("", "", baseURL)
+	
 	return &Client{
-		BaseURL: fmt.Sprintf("https://%s:8089", host),
-		HTTPClient: &http.Client{
+		Client:     splunkClient,
+		baseURL:    baseURL,
+		token:      token,
+		httpClient: &http.Client{
 			Timeout: 30 * time.Second,
 		},
-		Token: token,
 	}
 }
 
@@ -63,19 +71,19 @@ type Alert struct {
 	Actions      string `json:"actions"`
 }
 
-// doRequest performs an HTTP request to the Splunk API
+// doRequest performs an HTTP request to the Splunk API with Bearer token auth
 func (c *Client) doRequest(ctx context.Context, method, path string, body io.Reader, contentType string) (*http.Response, error) {
-	req, err := http.NewRequestWithContext(ctx, method, c.BaseURL+path, body)
+	req, err := http.NewRequestWithContext(ctx, method, c.baseURL+path, body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.Token))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token))
 	if contentType != "" {
 		req.Header.Set("Content-Type", contentType)
 	}
 
-	resp, err := c.HTTPClient.Do(req)
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute request: %w", err)
 	}

@@ -178,6 +178,13 @@ The server exposes the following tools:
 
 ## Development
 
+### Built With
+
+This CLI uses the following Go libraries:
+- **[github.com/kuba--/splunk](https://github.com/kuba--/splunk)** - Popular Splunk Enterprise REST API client for Go
+- **[github.com/mark3labs/mcp-go](https://github.com/mark3labs/mcp-go)** - Model Context Protocol server library
+- **[github.com/zalando/go-keyring](https://github.com/zalando/go-keyring)** - Cross-platform keyring library for secure token storage
+
 ### Building from Source
 
 ```bash
@@ -198,7 +205,7 @@ go test ./...
 splunk-cli/
 ├── internal/
 │   ├── config/      # Configuration management (host, token storage)
-│   └── splunk/      # Splunk API client
+│   └── splunk/      # Splunk API client (wraps github.com/kuba--/splunk)
 ├── main.go          # CLI entry point and command handlers
 ├── mcp.go           # MCP server implementation
 ├── mcp_test.go      # MCP server tests

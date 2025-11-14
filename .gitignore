@@ -8,6 +8,9 @@
 *.so
 *.dylib
 
+# Binary name
+splunk
+
 # Test binary, built with `go test -c`
 *.test
 

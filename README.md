@@ -92,11 +92,6 @@ The `splunk` CLI can be configured in two ways:
 Usage:
   splunk configure <host> - Configure Splunk host and token (reads token from stdin)
   splunk search <query> [earliest-time] [latest-time] - Run a Splunk search query
-  splunk list-saved-searches - List all saved searches
-  splunk create-saved-search <name> <query> [description] - Create a saved search
-  splunk list-alerts - List scheduled alerts
-  splunk server-info - Get Splunk server information
-  splunk send-event <index> <source> <sourcetype> <json-event> - Send an event to Splunk
   splunk mcp-server - Start MCP server (stdio transport)
 ```
 
@@ -109,31 +104,6 @@ splunk search "error" "-1h" "now"
 
 splunk search "index=main sourcetype=access_combined | stats count by status"
 # Search with SPL query
-```
-
-**List saved searches:**
-```bash
-splunk list-saved-searches
-```
-
-**Create a saved search:**
-```bash
-splunk create-saved-search "Error Monitor" "search index=main error" "Monitor for errors"
-```
-
-**List scheduled alerts:**
-```bash
-splunk list-alerts
-```
-
-**Get server information:**
-```bash
-splunk server-info
-```
-
-**Send an event:**
-```bash
-splunk send-event main app json '{"message": "Test event", "level": "info"}'
 ```
 
 ### MCP Server Mode
@@ -165,13 +135,8 @@ Learn more about MCP: https://modelcontextprotocol.io
    - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
    - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
-The server exposes the following tools:
+The server exposes the following tool:
 - `search` - Run a Splunk search query and return results
-- `list_saved_searches` - List all saved searches in Splunk
-- `create_saved_search` - Create a new saved search
-- `list_alerts` - List all scheduled alerts
-- `server_info` - Get Splunk server information
-- `send_event` - Send an event to Splunk via HTTP Event Collector
 
 **Example usage from an AI assistant:**
 > "Search Splunk for errors in the main index in the last hour and show me the top 10 results."

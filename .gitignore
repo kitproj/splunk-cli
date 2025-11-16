@@ -8,6 +8,14 @@
 *.so
 *.dylib
 
+# Binary names (specific files in root only)
+/splunk
+/splunk-cli
+
+# Build output directory
+/dist/
+dist/
+
 # Test binary, built with `go test -c`
 *.test
 

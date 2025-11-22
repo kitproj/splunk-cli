@@ -19,31 +19,15 @@ Binaries are available for:
 
 Download the binary for your platform from the [release page](https://github.com/kitproj/splunk-cli/releases).
 
-#### Linux
-
-**For Linux (amd64):**
 ```bash
-sudo curl -fsL -o /usr/local/bin/splunk https://github.com/kitproj/splunk-cli/releases/download/v0.0.1/splunk_v0.0.1_linux_amd64
-sudo chmod +x /usr/local/bin/splunk
-```
+VERSION=v0.0.1
 
-**For Linux (arm64):**
-```bash
-sudo curl -fsL -o /usr/local/bin/splunk https://github.com/kitproj/splunk-cli/releases/download/v0.0.1/splunk_v0.0.1_linux_arm64
-sudo chmod +x /usr/local/bin/splunk
-```
+PLATFORM=$(uname -s | tr '[:upper:]' '[:lower:]')
 
-#### macOS
+ARCH=$(uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
 
-**For macOS (Apple Silicon/arm64):**
-```bash
-sudo curl -fsL -o /usr/local/bin/splunk https://github.com/kitproj/splunk-cli/releases/download/v0.0.1/splunk_v0.0.1_darwin_arm64
-sudo chmod +x /usr/local/bin/splunk
-```
+sudo curl -fsL -o /usr/local/bin/splunk https://github.com/kitproj/splunk-cli/releases/download/${VERSION}/splunk_${VERSION}_${PLATFORM}_${ARCH}
 
-**For macOS (Intel/amd64):**
-```bash
-sudo curl -fsL -o /usr/local/bin/splunk https://github.com/kitproj/splunk-cli/releases/download/v0.0.1/splunk_v0.0.1_darwin_amd64
 sudo chmod +x /usr/local/bin/splunk
 ```
 
